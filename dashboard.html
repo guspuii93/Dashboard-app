@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard ทวนสอบรายวิชา 168-4281</title>
+  <meta name="description" content="Dashboard สรุปผลการทวนสอบรายวิชา 168-4281 การสังเกตและทดลองสอน (ฝึกประสบการณ์)" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --bg-primary: #0a0e1a;
+      --bg-secondary: #111827;
+      --bg-card: #1a2235;
+      --bg-card-hover: #1e2a3d;
+      --accent-blue: #3b82f6;
+      --accent-purple: #8b5cf6;
+      --accent-cyan: #06b6d4;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-pink: #ec4899;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border: #1e3a5f;
+      --border-light: #243a5e;
+      --shadow-glow: 0 0 30px rgba(59, 130, 246, 0.15);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Noto Sans Thai', 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(6, 182, 212, 0.04) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      padding: 40px 0 32px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 13px;
+      color: var(--accent-blue);
+      margin-bottom: 16px;
+      animation: fadeInDown 0.5s ease;
+    }
+
+    .header-badge .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--accent-blue);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(0.8);
+      }
+    }
+
+    .header h1 {
+      font-size: clamp(24px, 3vw, 38px);
+      font-weight: 700;
+      background: linear-gradient(135deg, #f1f5f9, var(--accent-blue), var(--accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      animation: fadeInDown 0.6s ease;
+    }
+
+    .header-sub {
+      color: var(--text-secondary);
+      font-size: 15px;
+      animation: fadeInDown 0.7s ease;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== STATS ROW ===== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      animation: fadeInUp 0.6s ease both;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-glow);
+      border-color: var(--accent-blue);
+    }
+
+    .stat-card .stat-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .stat-card .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-card .stat-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== SECTION TITLE ===== */
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 22px;
+      background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));
+      border-radius: 999px;
+    }
+
+    /* ===== CRITERIA CARDS ===== */
+    .criteria-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .criteria-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      animation: fadeInUp 0.5s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .criteria-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .criteria-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(59, 130, 246, 0.12);
+      border-color: rgba(59, 130, 246, 0.4);
+      background: var(--bg-card-hover);
+    }
+
+    .criteria-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .criteria-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      border-radius: 6px;
+      padding: 3px 10px;
+      white-space: nowrap;
+    }
+
+    .criteria-score-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      font-size: 22px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .score-full {
+      background: rgba(16, 185, 129, 0.15);
+      border: 2px solid rgba(16, 185, 129, 0.4);
+      color: var(--accent-green);
+    }
+
+    .score-partial {
+      background: rgba(245, 158, 11, 0.15);
+      border: 2px solid rgba(245, 158, 11, 0.4);
+      color: var(--accent-amber);
+    }
+
+    .criteria-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .criteria-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    /* Score bar */
+    .score-bar-wrap {
+      margin-bottom: 14px;
+    }
+
+    .score-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .score-bar-track {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .score-bar-fill.partial {
+      background: linear-gradient(90deg, var(--accent-amber), #f97316);
+    }
+
+    /* Voter dots */
+    .voter-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .voter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      padding: 4px 10px;
+    }
+
+    .voter-chip .v-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .v-dot.pass {
+      background: var(--accent-green);
+    }
+
+    .v-dot.partial {
+      background: var(--accent-amber);
+    }
+
+    /* Remarks */
+    .remark-box {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-top: 10px;
+    }
+
+    .remark-box .remark-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent-amber);
+      margin-bottom: 6px;
+    }
+
+    .remark-item {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .remark-item:last-child {
+      border-bottom: none;
+    }
+
+    .remark-item strong {
+      color: var(--text-primary);
+      font-size: 11px;
+    }
+
+    /* ===== COMMITTEE SECTION ===== */
+    .committee-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .committee-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: transform 0.25s, box-shadow 0.25s;
+      animation: fadeInUp 0.6s ease both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .committee-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      border-radius: 0 0 var(--radius) var(--radius);
+    }
+
+    .committee-card:nth-child(1)::after {
+      background: linear-gradient(90deg, #3b82f6, #06b6d4);
+    }
+
+    .committee-card:nth-child(2)::after {
+      background: linear-gradient(90deg, #8b5cf6, #ec4899);
+    }
+
+    .committee-card:nth-child(3)::after {
+      background: linear-gradient(90deg, #10b981, #06b6d4);
+    }
+
+    .committee-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .committee-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 14px;
+      flex-shrink: 0;
+    }
+
+    .avatar-blue {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    }
+
+    .avatar-purple {
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+    }
+
+    .avatar-green {
+      background: linear-gradient(135deg, #10b981, #065f46);
+    }
+
+    .committee-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .committee-date {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    .committee-score-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .committee-score-val {
+      font-size: 36px;
+      font-weight: 700;
+    }
+
+    .committee-score-label {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .committee-score-total {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-left: 2px;
+    }
+
+    .progress-ring-wrap {
+      position: relative;
+      width: 72px;
+      height: 72px;
+    }
+
+    .progress-ring-wrap svg {
+      transform: rotate(-90deg);
+    }
+
+    .progress-ring-wrap .ring-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.06);
+      stroke-width: 6;
+    }
+
+    .progress-ring-wrap .ring-fg {
+      fill: none;
+      stroke-width: 6;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .ring-pct {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 16px 0;
+    }
+
+    .final-verdict {
+      margin-top: 4px;
+    }
+
+    .verdict-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .verdict-text {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .verdict-text.pass-text {
+      color: var(--accent-green);
+    }
+
+    .suggestion-box {
+      background: rgba(59, 130, 246, 0.07);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-top: 12px;
+    }
+
+    .suggestion-box .s-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      margin-bottom: 5px;
+    }
+
+    .suggestion-box p {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ===== OVERALL RESULT BANNER ===== */
+    .overall-banner {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(59, 130, 246, 0.08) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--radius);
+      padding: 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 48px;
+      animation: fadeInUp 0.7s ease;
+    }
+
+    .overall-icon {
+      font-size: 48px;
+      flex-shrink: 0;
+    }
+
+    .overall-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent-green);
+      margin-bottom: 6px;
+    }
+
+    .overall-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .overall-stats {
+      margin-left: auto;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .overall-pct {
+      font-size: 48px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    .overall-pct-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ===== CHART / RADAR PLACEHOLDER ===== */
+    .chart-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    @media (max-width: 768px) {
+      .chart-section {
+        grid-template-columns: 1fr;
+      }
+
+      .overall-banner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .overall-stats {
+        margin-left: 0;
+        text-align: center;
+      }
+    }
+
+    .chart-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      animation: fadeInUp 0.6s ease;
+    }
+
+    .chart-card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+
+    /* Bar chart */
+    .bar-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .bar-row-label {
+      width: 80px;
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .bar-row-track {
+      flex: 1;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-row-fill {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 1.2s ease;
+    }
+
+    .bar-row-val {
+      font-size: 12px;
+      color: var(--text-primary);
+      font-weight: 600;
+      width: 38px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 12.5px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-badge">
+        <span class="dot"></span>
+        รายวิชา 168-4281 · ปีการศึกษา 2568
+      </div>
+      <h1>Dashboard ทวนสอบรายวิชา<br />การสังเกตและทดลองสอน (ฝึกประสบการณ์)</h1>
+      <p class="header-sub">สรุปผลการทวนสอบโดยคณะกรรมการ 3 ท่าน · ข้อมูล ณ วันที่ 17 มิถุนายน 2569</p>
+    </header>
+
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-card" style="animation-delay:0.1s">
+        <div class="stat-icon">📋</div>
+        <div class="stat-value">17</div>
+        <div class="stat-label">จำนวนเกณฑ์ทวนสอบ</div>
+      </div>
+      <div class="stat-card" style="animation-delay:0.2s">
+        <div class="stat-icon">👥</div>
+        <div class="stat-value">3</div>
+        <div class="stat-label">คณะกรรมการทวนสอบ</div>
+      </div>
+      <div class="stat-card" style="animation-delay:0.3s">
+        <div class="stat-icon">✅</div>
+        <div class="stat-value">+1</div>
+        <div class="stat-label">คะแนนสูงสุดต่อเกณฑ์</div>
+      </div>
+      <div class="stat-card" style="animation-delay:0.4s">
+        <div class="stat-icon">🏆</div>
+        <div class="stat-value">100%</div>
+        <div class="stat-label">ผ่านเกณฑ์</div>
+      </div>
+    </div>
+
+    <!-- OVERALL RESULT -->
+    <div class="overall-banner">
+      <div class="overall-icon">🎯</div>
+      <div>
+        <div class="overall-title">ผ่านการทวนสอบทุกเกณฑ์</div>
+        <div class="overall-desc">
+          รายวิชา 168-4281 การสังเกตและทดลองสอน (ฝึกประสบการณ์) ผ่านการทวนสอบจากคณะกรรมการทั้ง 3 ท่าน<br />
+          ทุกเกณฑ์ได้รับการประเมินในระดับ <strong style="color:var(--accent-green)">+1
+            เป็นไปตามที่หลักสูตรกำหนด</strong>
+        </div>
+      </div>
+      <div class="overall-stats">
+        <div class="overall-pct">+1</div>
+        <div class="overall-pct-label">คะแนนเฉลี่ยรวมทุกเกณฑ์</div>
+      </div>
+    </div>
+
+    <!-- CHART SECTION -->
+    <div class="chart-section">
+      <div class="chart-card">
+        <h3>📊 คะแนนเฉลี่ยแยกตามเกณฑ์</h3>
+        <div class="bar-chart" id="barChart"></div>
+      </div>
+      <div class="chart-card">
+        <h3>👤 สรุปคะแนนรวมแยกตามกรรมการ</h3>
+        <div class="bar-chart" id="committeeChart"></div>
+        <div class="legend" style="margin-top:20px">
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#3b82f6"></div>ผศ.ดร.ธวัชชัย
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#8b5cf6"></div>ผศ.ดร.ชยกานต์
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#10b981"></div>ผศ.ดร.กาญจนา
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CRITERIA DETAIL -->
+    <div class="section-title">รายละเอียดผลการทวนสอบแยกตามเกณฑ์</div>
+    <div class="criteria-grid" id="criteriaGrid"></div>
+
+    <!-- COMMITTEE SECTION -->
+    <div class="section-title">สรุปสถานะสุดท้ายของกรรมการแต่ละท่าน</div>
+    <div class="committee-grid" id="committeeGrid"></div>
+
+    <footer class="footer">
+      <p>Dashboard สรุปผลการทวนสอบ · รายวิชา 168-4281 · คณะศึกษาศาสตร์ · สร้างโดยอัตโนมัติจากข้อมูลแบบฟอร์มตอบรับ</p>
+    </footer>
+  </div>
+
+  <script>
+    // =====================================================
+    //  DATA
+    // =====================================================
+    const CRITERIA = [
+      {
+        id: "1.2",
+        tag: "เกณฑ์ 1.2",
+        name: "Expected Learning Outcomes Formulation",
+        desc: "PLOs ถ่ายทอดไปยัง CLOs อย่างเหมาะสม และ CLOs สอดคล้องกับ PLOs",
+        scores: [1, 1, 1],
+        remarks: []
+      },
+      {
+        id: "2.2",
+        tag: "เกณฑ์ 2.2",
+        name: "Curriculum Design Alignment",
+        desc: "รายวิชา fulfil PLOs และทุกบทเรียนใน fulfil CLOs",
+        scores: [1, 1, 1],
+        remarks: []
+      },
+      {
+        id: "2.4",
+        tag: "เกณฑ์ 2.4",
+        name: "Course Contribution to ELOs",
+        desc: "กระบวนการจัดการเรียนการสอนและประเมินผลผลักดันให้บรรลุ PLOs",
+        scores: [1, 1, 1],
+        remarks: []
+      },
+      {
+        id: "2.5",
+        tag: "เกณฑ์ 2.5",
+        name: "Logical Sequence and Structure",
+        desc: "การจัดเรียงลำดับรายวิชาถูกที่ตาม YLOs",
+        scores: [1, 1, 0],
+        remarks: [
+          { who: "ผศ.ดร.กาญจนา", text: "-" }
+        ]
+      },
+      {
+        id: "2.7",
+        tag: "เกณฑ์ 2.7",
+        name: "Periodic Curriculum Review",
+        desc: "วางแผนการปรับปรุงวิชาให้ตรงตามความต้องการของตลาดแรงงาน ทันสมัย",
+        scores: [1, 1, 1],
+        remarks: [
+          { who: "ผศ.ดร.กาญจนา", text: "เป็นไปตามแผนการเรียน" }
+        ]
+      },
+      {
+        id: "3.2",
+        tag: "เกณฑ์ 3.2",
+        name: "Responsible Student Participation",
+        desc: "ออกแบบการจัดการเรียนการสอนที่ให้ผู้เรียนมีส่วนร่วม (PBL)",
+        scores: [1, 1, 1],
+        remarks: [
+          { who: "ผศ.ดร.กาญจนา", text: "ยังไม่เห็นการปรับปรุงเนื่องจากรายวิชานี้เพิ่งได้ดำเนินการสอนครั้งแรก" }
+        ]
+      },
+      {
+        id: "3.3",
+        tag: "เกณฑ์ 3.3",
+        name: "Active Learning Involvement",
+        desc: "จัดการเรียนการสอนแบบ Active Learning (100% ของรายวิชา)",
+        scores: [1, 1, 1],
+        remarks: []
+      },
+      {
+        id: "3.4",
+        tag: "เกณฑ์ 3.4",
+        name: "Promotion of Lifelong Learning (LLL)",
+        desc: "ส่งเสริมทักษะการเรียนรู้ตลอดชีวิต (คิดวิเคราะห์เชิงวิพากษ์ ทักษะประมวลผล)",
+        scores: [1, 1, 1],
+        remarks: []
+      },
+      {
+        id: "3.5",
+        tag: "เกณฑ์ 3.5",
+        name: "Inculcation of Innovation & Entrepreneurship",
+        desc: "กำหนดแนวทาง/จัด TLA ส่งเสริมความคิดสร้างสรรค์ นวัตกรรม และแนวคิดผู้ประกอบการ",
+        scores: [1, 1, 1],
+        remarks: []
+      },
+      {
+        id: "3.6",
+        tag: "เกณฑ์ 3.6",
+        name: "Continuous Improvement of TLA",
+        desc: "กำหนดวิธีการทบทวนเพื่อปรับปรุง TLA ให้ตอบสนองต่อ ELOs",
+        scores: [1, 1, 1],
+        remarks: []
+      },
+      {
+        id: "4.1",
+        tag: "เกณฑ์ 4.1",
+        name: "Variety & Alignment of Assessment Methods",
+        desc: "จัดให้มีเครื่องมือประเมินอย่างหลากหลาย ตรวจสอบ PLOs และ CLOs",
+        scores: [1, 1, 1],
+        remarks: []
+      },
+      {
+        id: "4.2",
+        tag: "เกณฑ์ 4.2",
+        name: "Assessment & Appeal Policies",
+        desc: "กำหนดแนวทางประเมินผล การอุทธรณ์ และสื่อสารให้นักศึกษารับทราบ",
+        scores: [1, 1, 1],
+        remarks: []
+      },
+      {
+        id: "4.3",
+        tag: "เกณฑ์ 4.3",
+        name: "Progression & Tracking Standards",
+        desc: "มีมาตรฐาน/ขั้นตอนติดตามความก้าวหน้าผ่าน Google Classroom, E-learning",
+        scores: [1, 1, 1],
+        remarks: [
+          { who: "ผศ.ดร.กาญจนา", text: "มีเครื่องมือการวัดประเมินหลากหลาย พิจารณาเวลาความเหมาะสมในการดำเนินการกิจกรรม เพื่อไม่เพิ่มภาระกับผู้เรียนมากเกินควร" }
+        ]
+      },
+      {
+        id: "4.4",
+        tag: "เกณฑ์ 4.4",
+        name: "Validity, Reliability & Fairness",
+        desc: "จัดทำ rubrics, marking schemes และ timeline ที่ชัดเจนเพื่อรับประกันความยุติธรรม",
+        scores: [1, 1, 1],
+        remarks: []
+      },
+      {
+        id: "4.5",
+        tag: "เกณฑ์ 4.5",
+        name: "Assessment Matrix to ELOs/CLOs/PLOs",
+        desc: "จัดทำตาราง Matrix แสดงวิธีการประเมินผลแต่ละแบบสู่ ELOs → CLOs → PLOs",
+        scores: [1, 1, 1],
+        remarks: []
+      },
+      {
+        id: "4.6",
+        tag: "เกณฑ์ 4.6",
+        name: "Timely Feedback for Improvement",
+        desc: "กำหนดแนวปฏิบัติการให้ Feedback ผลประเมินกลับสู่นักศึกษาอย่างทันท่วงที",
+        scores: [1, 1, 1],
+        remarks: []
+      },
+      {
+        id: "4.7",
+        tag: "เกณฑ์ 4.7",
+        name: "Continuous Review of Assessment Processes",
+        desc: "กำหนด Timeline ทบทวนและปรับปรุงกระบวนการประเมินผลอย่างต่อเนื่อง",
+        scores: [1, 1, 1],
+        remarks: []
+      }
+    ];
+
+    const COMMITTEE = [
+      {
+        name: "ผู้ช่วยศาสตราจารย์ ดร.ธวัชชัย สหพงษ์",
+        shortName: "ธ",
+        date: "16 มิถุนายน 2569 · 10:23 น.",
+        avatarClass: "avatar-blue",
+        colorHex: "#3b82f6",
+        ringColor: "url(#grad1)",
+        totalScore: 17,
+        maxScore: 17,
+        verdict: "มีการจัดกิจกรรมตามแผน และมีขั้นตอนประเมินครอบคลุมทุกมิติ",
+        suggestion: "-",
+        hasSuggestion: false,
+        passAll: true
+      },
+      {
+        name: "ผู้ช่วยศาสตราจารย์ ดร.ชยกานต์ เรืองสุวรรณ",
+        shortName: "ช",
+        date: "16 มิถุนายน 2569 · 13:18 น.",
+        avatarClass: "avatar-purple",
+        colorHex: "#8b5cf6",
+        ringColor: "url(#grad2)",
+        totalScore: 17,
+        maxScore: 17,
+        verdict: "ทำเอกสารได้ดีมาก สอดคล้องกับหลักสูตร มคอ.2",
+        suggestion: "ปรับตามคณะกรรมการเสนอแนะ",
+        hasSuggestion: true,
+        passAll: true
+      },
+      {
+        name: "ผู้ช่วยศาสตราจารย์ ดร.กาญจนา คำสมบัติ",
+        shortName: "ก",
+        date: "17 มิถุนายน 2569 · 14:29 น.",
+        avatarClass: "avatar-green",
+        colorHex: "#10b981",
+        ringColor: "url(#grad3)",
+        totalScore: 16,
+        maxScore: 17,
+        verdict: "มีเครื่องมือการวัดประเมินหลากหลาย พิจารณาเวลาความเหมาะสมในการดำเนินการกิจกรรมให้เหมาะสม เพื่อไม่เป็นการเพิ่มภาระกับผู้เรียนมากเกินควร",
+        suggestion: "มีเครื่องมือการวัดประเมินหลากหลาย พิจารณาเวลาความเหมาะสมในการดำเนินการกิจกรรมให้เหมาะสมเพื่อไม่เป็นการเพิ่มภาระกับผู้เรียนมากเกินควรจำเป็น",
+        hasSuggestion: true,
+        passAll: false
+      }
+    ];
+
+    const COMMITTEE_SHORT = ["ผศ.ดร.ธวัชชัย", "ผศ.ดร.ชยกานต์", "ผศ.ดร.กาญจนา"];
+    const COMMITTEE_COLORS = ["#3b82f6", "#8b5cf6", "#10b981"];
+
+    // =====================================================
+    //  RENDER BAR CHART (criteria)
+    // =====================================================
+    function renderBarChart() {
+      const el = document.getElementById('barChart');
+      CRITERIA.forEach(c => {
+        const avg = c.scores.reduce((a, b) => a + b, 0) / c.scores.length;
+        const pct = avg === 1 ? 100 : Math.round(avg * 100);
+        const isPartial = pct < 100;
+        const row = document.createElement('div');
+        row.className = 'bar-row';
+        row.innerHTML = `
+        <div class="bar-row-label">${c.tag}</div>
+        <div class="bar-row-track">
+          <div class="bar-row-fill ${isPartial ? '' : ''}
+            " style="width:0%;background:${isPartial ? 'linear-gradient(90deg,#f59e0b,#f97316)' : 'linear-gradient(90deg,#3b82f6,#06b6d4)'}"></div>
+        </div>
+        <div class="bar-row-val">${avg === 1 ? '+1' : '+' + avg.toFixed(2)}</div>
+      `;
+        el.appendChild(row);
+        setTimeout(() => {
+          row.querySelector('.bar-row-fill').style.width = pct + '%';
+        }, 200);
+      });
+    }
+
+    // =====================================================
+    //  RENDER COMMITTEE CHART
+    // =====================================================
+    function renderCommitteeChart() {
+      const el = document.getElementById('committeeChart');
+      COMMITTEE.forEach((c, i) => {
+        const pct = Math.round((c.totalScore / c.maxScore) * 100);
+        const row = document.createElement('div');
+        row.className = 'bar-row';
+        row.innerHTML = `
+        <div class="bar-row-label" style="font-size:10.5px">${COMMITTEE_SHORT[i]}</div>
+        <div class="bar-row-track">
+          <div class="bar-row-fill" style="width:0%;background:linear-gradient(90deg,${COMMITTEE_COLORS[i]},${COMMITTEE_COLORS[(i + 1) % 3]})"></div>
+        </div>
+        <div class="bar-row-val">${c.totalScore}/${c.maxScore}</div>
+      `;
+        el.appendChild(row);
+        setTimeout(() => {
+          row.querySelector('.bar-row-fill').style.width = pct + '%';
+        }, 300 + i * 150);
+      });
+    }
+
+    // =====================================================
+    //  RENDER CRITERIA CARDS
+    // =====================================================
+    function renderCriteriaCards() {
+      const grid = document.getElementById('criteriaGrid');
+      CRITERIA.forEach((c, idx) => {
+        const avg = c.scores.reduce((a, b) => a + b, 0) / c.scores.length;
+        const isFull = avg === 1;
+        const pct = Math.round(avg * 100);
+
+        let voterHtml = c.scores.map((s, i) => `
+        <div class="voter-chip">
+          <span class="v-dot ${s === 1 ? 'pass' : 'partial'}"></span>
+          ${COMMITTEE_SHORT[i]}: ${s === 1 ? '+1' : 'ไม่ผ่าน'}
+        </div>
+      `).join('');
+
+        let remarkHtml = '';
+        if (c.remarks.length > 0) {
+          const items = c.remarks.map(r => `
+          <div class="remark-item"><strong>${r.who}:</strong> ${r.text}</div>
+        `).join('');
+          remarkHtml = `
+          <div class="remark-box">
+            <div class="remark-label">💬 ข้อคิดเห็น / หมายเหตุ</div>
+            ${items}
+          </div>
+        `;
+        }
+
+        const card = document.createElement('div');
+        card.className = 'criteria-card';
+        card.style.animationDelay = (idx * 0.05) + 's';
+        card.innerHTML = `
+        <div class="criteria-header">
+          <div>
+            <div class="criteria-tag">${c.tag}</div>
+          </div>
+          <div class="criteria-score-badge ${isFull ? 'score-full' : 'score-partial'}">
+            ${isFull ? '+1' : '+' + avg.toFixed(2)}
+          </div>
+        </div>
+        <div class="criteria-name">${c.name}</div>
+        <div class="criteria-desc">${c.desc}</div>
+        <div class="score-bar-wrap">
+          <div class="score-bar-label">
+            <span>คะแนนเฉลี่ย</span>
+            <span>${pct}%</span>
+          </div>
+          <div class="score-bar-track">
+            <div class="score-bar-fill ${isFull ? '' : 'partial'}" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="voter-row">${voterHtml}</div>
+        ${remarkHtml}
+      `;
+        grid.appendChild(card);
+        setTimeout(() => {
+          card.querySelector('.score-bar-fill').style.width = pct + '%';
+        }, 300 + idx * 50);
+      });
+    }
+
+    // =====================================================
+    //  RENDER COMMITTEE CARDS
+    // =====================================================
+    function renderCommitteeCards() {
+      const grid = document.getElementById('committeeGrid');
+
+      const ringConfigs = [
+        { stroke: '#3b82f6' },
+        { stroke: '#8b5cf6' },
+        { stroke: '#10b981' },
+      ];
+
+      COMMITTEE.forEach((c, i) => {
+        const pct = Math.round((c.totalScore / c.maxScore) * 100);
+        const r = 28;
+        const circumference = 2 * Math.PI * r;
+        const dashoffset = circumference * (1 - pct / 100);
+
+        const suggestionHtml = c.hasSuggestion && c.suggestion !== '-'
+          ? `<div class="suggestion-box">
+             <div class="s-label">💡 ข้อเสนอแนะแนวทางปรับปรุง</div>
+             <p>${c.suggestion}</p>
+           </div>`
+          : '';
+
+        const card = document.createElement('div');
+        card.className = 'committee-card';
+        card.style.animationDelay = (i * 0.1 + 0.3) + 's';
+        card.innerHTML = `
+        <div style="display:flex;align-items:flex-start;gap:16px">
+          <div class="committee-avatar ${c.avatarClass}">${c.shortName}</div>
+          <div style="flex:1">
+            <div class="committee-name">${c.name}</div>
+            <div class="committee-date">📅 ${c.date}</div>
+          </div>
+        </div>
+        <hr class="divider"/>
+        <div class="committee-score-row">
+          <div>
+            <div class="committee-score-val" style="background:linear-gradient(135deg,${ringConfigs[i].stroke},#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">
+              ${c.totalScore}<span class="committee-score-total" style="-webkit-text-fill-color:var(--text-muted);font-size:20px">/${c.maxScore}</span>
+            </div>
+            <div class="committee-score-label">เกณฑ์ที่ผ่านการทวนสอบ</div>
+          </div>
+          <div class="progress-ring-wrap">
+            <svg width="72" height="72" viewBox="0 0 72 72">
+              <circle class="ring-bg" cx="36" cy="36" r="${r}"/>
+              <circle class="ring-fg" cx="36" cy="36" r="${r}"
+                stroke="${ringConfigs[i].stroke}"
+                stroke-dasharray="${circumference}"
+                stroke-dashoffset="${circumference}"
+                id="ring-${i}"/>
+            </svg>
+            <div class="ring-pct">${pct}%</div>
+          </div>
+        </div>
+        <hr class="divider"/>
+        <div class="final-verdict">
+          <div class="verdict-label">สรุปผลการทวนสอบภาพรวม</div>
+          <div class="verdict-text ${c.passAll ? 'pass-text' : ''}">${c.verdict}</div>
+        </div>
+        ${suggestionHtml}
+      `;
+        grid.appendChild(card);
+
+        // Animate ring
+        setTimeout(() => {
+          document.getElementById('ring-' + i).style.strokeDashoffset = dashoffset;
+          document.getElementById('ring-' + i).style.transition = 'stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1)';
+        }, 400 + i * 150);
+      });
+    }
+
+    // =====================================================
+    //  INIT
+    // =====================================================
+    renderBarChart();
+    renderCommitteeChart();
+    renderCriteriaCards();
+    renderCommitteeCards();
+  </script>
+</body>
+
+</html>
